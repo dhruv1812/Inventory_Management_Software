@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+    <br>
+
+    <div class="add_buttons">
+
+        <div class="button-group">
+          <a href="{% url 'display_products' %}" class="btn btn-primary btn-md btn-trim" role="button"> products</a>
+          <a href="{% url 'add_products' %}" class="btn btn-warning btn-sm btn-pad" role="button"> +</a>
+
+          <a href="{% url 'display_customers' %}" class="btn btn-primary btn-md btn-trim" role="button"> customers</a>
+          <a href="{% url 'add_customers' %}" class="btn btn-warning btn-sm btn-pad" role="button"> +</a>
+
+          <a href="{% url 'display_orders' %}" class="btn btn-primary btn-md btn-trim" role="button"> orders</a>
+          <a href="{% url 'add_orders' %}" class="btn btn-warning btn-sm btn-pad" role="button"> +</a>
+
+        </div>
+
+  </div>
+
+  <div>
+
+    <h4>Currently Viewing {{ header }}</h4>
+
+  </div>
+
+{% if header|lower == "products" %}
+
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th>product_id</th>
+        <th>name</th>
+        <th>price</th>
+        <th>location</th>
+        <th>count_inventory</th>
+        <th>count_sold</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      {% for item in items %}
+
+      <tr>
+        <td>{{ item.product_id }}
+        <td>{{ item.name }}</td>
+        <td>{{ item.price }} $</td>
+        <td>{{ item.locations }}</td>
+        <td>{{ item.count_inventory }}</td>
+        <td>{{ item.count_sold }}</td>
+
+
+        <td>
+            <a href="{% url 'edit_products' item.product_id %}" class="btn btn-warning btn-sm" role="button" aria-pressed="true" > Edit</a>
+            <a href="{% url 'delete_products' item.pk%}" class="btn btn-danger btn-sm" role="button" aria-pressed="true" > x</a>
+        </td>
+
+      </tr>
+      {% endfor %}
+
+    </tbody>
+</table>
+
+{% elif header|lower == "customers" %}
+
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th>customer_id</th>
+        <th>first_name</th>
+        <th>last_name</th>
+        <th>address</th>
+        <th>city</th>
+        <th>country</th>
+        <th>postcode</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      {% for item in items %}
+
+      <tr>
+        <td>{{ item.customer_id }}
+        <td>{{ item.first_name }}</td>
+        <td>{{ item.last_name }} </td>
+        <td>{{ item.address }}</td>
+        <td>{{ item.city }}</td>
+        <td>{{ item.country }}</td>
+        <td>{{ item.postcode }}</td>
+
+
+        <td>
+            <a href="{% url 'edit_customers' item.customer_id %}" class="btn btn-warning btn-sm" role="button" aria-pressed="true" > Edit</a>
+            <a href="{% url 'delete_customers' item.pk%}" class="btn btn-danger btn-sm" role="button" aria-pressed="true" > x</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+
+</table>
+
+{% else %}
+
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th>order_id</th>
+        <th>product_id</th>
+        <th>customer_id</th>
+        <th>order_date</th>
+        <th>delivery_date</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      {% for item in items %}
+
+      <tr>
+        <td>{{ item.order_id }}
+        <td>{{ item.product_id }}</td>
+        <td>{{ item.customer_id }} </td>
+        <td>{{ item.order_date }}</td>
+        <td>{{ item.delivery_date }}</td>
+
+
+
+        <td>
+            <a href="{% url 'edit_orders' item.order_id %}" class="btn btn-warning btn-sm" role="button" aria-pressed="true" > Edit</a>
+            <a href="{% url 'delete_orders' item.pk%}" class="btn btn-danger btn-sm" role="button" aria-pressed="true" > x</a>
+        </td>
+      </tr>
+      {% endfor %}
+     </tbody>
+</table>
+
+{% endif %}
+
+
+
+{% endblock %}
